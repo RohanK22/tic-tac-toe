@@ -4,14 +4,28 @@ import React, { useState, useEffect } from 'react';
 function App() {
 	// State to store 3x3 grid
 	const [board, setBoard] = useState(Array(9).fill(null));
-  const []
+	const [turnX, setTurnX] = useState(false);
+	const [winner, setWinner] = useState(null);
+
+	const handleClick = (i) => {
+		const boardCopy = [...board];
+		setWinner(calculateWinner(board));
+		if (winner || boardCopy[i] != null) return;
+		boardCopy[i] = turnX ? 'X' : 'O';
+		setBoard(boardCopy);
+		setTurnX(!turnX);
+	};
 
 	const boardGUI = () => {
 		return (
 			<div className="board">
-				{board.map((x) => {
+				{board.map((x, i) => {
 					return (
-						<div key={Math.random()} className="square">
+						<div
+							key={i}
+							className="square"
+							onClick={() => handleClick(i)}
+						>
 							{x === null ? '_' : x}
 						</div>
 					);
@@ -37,7 +51,11 @@ function calculateWinner(squares) {
 	];
 	for (let i = 0; i < lines.length; i++) {
 		const [a, b, c] = lines[i];
-		if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+		if (
+			squares[a] &&
+			squares[a] === squares[b] &&
+			squares[a] === squares[c]
+		) {
 			return squares[a];
 		}
 	}
