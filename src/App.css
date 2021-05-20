@@ -22,8 +22,8 @@ body {
 }
 
 .board {
-	height: 80vh;
-	width: 80vh;
+	height: 80vmin;
+	width: 80vmin;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
