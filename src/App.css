@@ -10,6 +10,12 @@ body {
 	align-items: center;
 }
 
+.heading {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 300%;
+	text-align: center;
+}
+
 .App {
 	display: block;
 	height: fit-content;
@@ -37,4 +43,10 @@ body {
 
 .square:hover {
 	cursor: pointer;
+}
+
+#win-text {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 150%;
+	text-align: center;
 }

@@ -4,33 +4,49 @@ import React, { useState, useEffect } from 'react';
 function App() {
 	// State to store 3x3 grid
 	const [board, setBoard] = useState(Array(9).fill(null));
-	const [turnX, setTurnX] = useState(false);
+	const [turnX, setTurnX] = useState(true);
 	const [winner, setWinner] = useState(null);
 
 	const handleClick = (i) => {
 		const boardCopy = [...board];
-		setWinner(calculateWinner(board));
 		if (winner || boardCopy[i] != null) return;
 		boardCopy[i] = turnX ? 'X' : 'O';
 		setBoard(boardCopy);
 		setTurnX(!turnX);
+		setWinner(calculateWinner(boardCopy));
 	};
+
+	useEffect(() => {
+		document.getElementById('win-text').innerHTML = winner
+			? 'Winner: ' + winner + '! Refresh to play again'
+			: 'Next Player: ' + (turnX ? 'X' : 'O');
+	}, [board]);
 
 	const boardGUI = () => {
 		return (
-			<div className="board">
-				{board.map((x, i) => {
-					return (
-						<div
-							key={i}
-							className="square"
-							onClick={() => handleClick(i)}
-						>
-							{x === null ? '_' : x}
-						</div>
-					);
-				})}
-			</div>
+			<>
+				<h1 className="heading">Tic-Tac-Toe</h1>
+				<div className="board">
+					{board.map((x, i) => {
+						return (
+							<div
+								key={i}
+								className="square"
+								onClick={() => {
+									handleClick(i);
+								}}
+							>
+								{x === null ? '_' : x}
+							</div>
+						);
+					})}
+				</div>
+				<div id="win-text">
+					{winner
+						? 'Winner: ' + winner
+						: 'Next Player: ' + (turnX ? 'X' : 'O')}
+				</div>
+			</>
 		);
 	};
 
